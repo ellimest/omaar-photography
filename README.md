@@ -8,7 +8,7 @@ A responsive, static portfolio using your Between Stops photographs. No installa
 2. Upload the contents of this folder directly to the repository root. Keep the assets folder intact. Upload the files, not this ZIP.
 3. For a portfolio-only GitHub Pages edition, change `SHOW_COMMERCIAL_OFFERS = true` to `false` in site.js. The session and print sections and navigation link will be removed. For a permanent portfolio-only source, also delete the `.commercial` elements from index.html before publishing.
 4. Open repository Settings → Pages → Build and deployment → Deploy from a branch. Select main and / (root), then Save.
-5. GitHub will show your actual published URL. Usually it is https://YOUR-USERNAME.github.io/omaar-photography/. Leave the custom domain field empty; don't create a CNAME file.
+5. GitHub will show your actual published URL. Usually it is https://ellimest.github.io/omaar-photography/. Leave the custom domain field empty; don't create a CNAME file.
 
 GitHub Pages restricts using its service to run an online business or a site primarily facilitating commercial transactions. For the full session/pricing edition, keep this repository on GitHub and deploy through an appropriate static host, such as Cloudflare Pages. Verify that host's current plan and terms before deploying. For a static host use no build command; output directory is the repository root. No secrets or payment collection are included.
 
