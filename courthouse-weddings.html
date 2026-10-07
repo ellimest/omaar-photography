@@ -57,34 +57,93 @@
     </section>
     <section id="inquire">
       <h2>Tell me when you’re getting married.</h2>
-      <p>Fill in what you know, copy your message, then paste and send it to <a href="https://www.instagram.com/omaarvelous/" target="_blank" rel="noopener noreferrer">@omaarvelous on Instagram</a>.</p>
-      <p>This creates a message; it does not send an inquiry or reserve a date. I’ll confirm availability, the total price, and the booking details with you.</p>
+      <p>Fill in what you know, then email your inquiry or copy and send it through Instagram.</p>
+<p>
+  Email:
+  <a href="mailto:photographybyomaar@gmail.com">
+    photographybyomaar@gmail.com
+  </a>
+</p>
+<p>This creates a message; it does not send an inquiry or reserve a date. I’ll confirm availability, the total price, and booking details with you.</p>
       <form id="date-form">
         <div class="date-grid">
           <label class="full">Your names<input name="names" autocomplete="name" maxlength="120" required></label>
           <label>Ceremony date (leave blank if undecided)<input name="date" type="date"></label>
           <label>Ceremony time (if known)<input name="time" type="time"></label>
-          <label class="full">Courthouse or ceremony location<input name="location" placeholder="City and exact venue, or not decided yet" maxlength="200" required></label>
-          <label class="full">Photography preference<select name="coverage"><option>Courthouse Mini — $75</option><option>Courthouse Portrait — $125</option><option>Film Keepsake — $175</option><option>Film Story — $250</option><option>Help me choose</option></select></label>
-          <label class="full">Anything else? (optional)<textarea name="notes" rows="3" maxlength="1000" placeholder="Guests, portraits before or after, or questions"></textarea></label>
-        </div>
-        <button class="button" type="submit">1. Create inquiry message</button>
-      </form>
-      <div id="message-panel" hidden>
-        <label for="message">Your message — review before sending</label>
-        <textarea id="message" rows="9"></textarea>
-        <button class="button" id="copy-message" type="button">2. Copy message</button>
-        <a class="button" href="https://www.instagram.com/omaarvelous/" target="_blank" rel="noopener noreferrer">3. Open Instagram and send ↗</a>
-        <p id="message-status" role="status" aria-live="polite"></p>
-      </div>
-      <noscript><p>Send your names, ceremony date, time, venue, and preferred package directly to @omaarvelous on Instagram.</p></noscript>
-    </section>
-    <section>
-      <h2>Before we book</h2>
-      <details><summary>Can I inquire before my ceremony time is confirmed?</summary><p>Yes. Share your intended date and location. We can discuss options, then confirm the schedule before booking.</p></details>
-      <details><summary>Do you photograph inside the courthouse?</summary><p>Only when the venue permits it and ceremony coverage is agreed in advance. We can plan portraits outside or at a nearby location.</p></details>
-      <details><summary>Can I choose film?</summary><p>Yes. Film options and handmade prints are available subject to production and darkroom availability, confirmed before booking.</p></details>
-      <details><summary>Are you affiliated with the courthouse?</summary><p>No. I’m an independent photographer. You arrange your marriage license and ceremony directly with the relevant clerk’s office.</p></details>
+          <div id="message-panel" hidden>
+  <label for="message">Your message — review before sending</label>
+  <textarea id="message" rows="9"></textarea>
+
+  <button class="button" id="email-message" type="button">
+    Email your inquiry ↗
+  </button>
+
+  <button class="button" id="copy-message" type="button">
+    Copy message
+  </button>
+
+  <a class="button"
+     href="https://www.instagram.com/omaarvelous/"
+     target="_blank" rel="noopener noreferrer">
+    Open Instagram profile ↗
+  </a>
+
+  <script>
+  const form = document.getElementById('date-form');
+  const message = document.getElementById('message');
+  const messageStatus = document.getElementById('message-status');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const data = new FormData(form);
+    const value = (name) => String(data.get(name) || '').trim();
+
+    message.value = [
+      'Hi Omaar! We would like to check your availability for courthouse wedding photography.',
+      'Names: ' + value('names'),
+      'Ceremony date: ' + (value('date') || 'Not confirmed yet'),
+      'Ceremony time: ' + (value('time') || 'Not confirmed yet') + ' (Florida local time)',
+      'Location: ' + value('location'),
+      'Package: ' + value('coverage'),
+      value('notes') ? 'Notes: ' + value('notes') : ''
+    ].filter(Boolean).join('\n');
+
+    document.getElementById('message-panel').hidden = false;
+    messageStatus.textContent =
+      'Message created. Review it, then email it or copy and send it through Instagram.';
+    message.focus();
+  });
+
+  document.getElementById('email-message').addEventListener('click', () => {
+    const subject = encodeURIComponent(
+      'Courthouse wedding photography inquiry'
+    );
+    const body = encodeURIComponent(
+      message.value.replace(/\r?\n/g, '\r\n')
+    );
+
+    messageStatus.textContent =
+      'Opening an email draft. You must send it in your email app. If no draft opens, copy the message and email photographybyomaar@gmail.com.';
+
+    window.location.href =
+      'mailto:photographybyomaar@gmail.com?subject=' +
+      subject + '&body=' + body;
+  });
+
+  document.getElementById('copy-message').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(message.value);
+      messageStatus.textContent =
+        'Copied. Paste and send your message through email or Instagram.';
+    } catch {
+      message.focus();
+      message.select();
+      messageStatus.textContent =
+        'Copy the selected message manually, then paste and send it through email or Instagram.';
+    }
+  });
+</script>
     </section>
   </main>
   <footer><span>Omaar Antonio · Central Florida</span><a href="./">Back to portfolio ↑</a></footer>
